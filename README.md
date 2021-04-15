@@ -1,23 +1,25 @@
 <div align="center">
-  <img alt="Logo" src="https://github.com/dotmind/modals/raw/master/dotmind-logo.png" width="100" />
+  <img alt="Logo" src="https://github.com/dotmind/react-modals/raw/master/dotmind-logo.png" width="100" />
 </div>
 <h1 align="center">
-  @dotmind/modals
+  @dotmind/react-modals
 </h1>
 <p align="center">
-  Modals is a tool to quickly generate modals
+  React Modals is a tool to quickly generate modals
 </p>
 <p align="center">
-  <a href="https://github.com/dotmind/modals">
-    <img src="https://img.shields.io/npm/v/@dotmind/modals" />
+  <a href="https://github.com/dotmind/react-modals">
+    <img src="https://img.shields.io/npm/v/@dotmind/react-modals" />
   </a>
-  <a href="https://github.com/dotmind/modals">
-    <img src="https://img.shields.io/github/license/dotmind/modals" />
+  <a href="https://github.com/dotmind/react-modals">
+    <img src="https://img.shields.io/github/license/dotmind/react-modals" />
   </a>
-  <a href="https://github.com/dotmind/modals">
+  <a href="https://github.com/dotmind/react-modals">
     <img src="https://img.shields.io/npm/types/typescript" />
   </a>
 </p>
+
+![preview](https://raw.githubusercontent.com/dotmind/modals/master/preview.png)
 
 ## Menu
 
@@ -35,13 +37,13 @@
 ## 💻 Installation
 
 ```bash
-yarn add @dotmind/modals
+yarn add @dotmind/react-modals
 ```
 
 or
 
 ```bash
-npm i @dotmind/modals
+npm i @dotmind/react-modals
 ```
 
 ## 👷‍♂️ How it's work
