@@ -19,7 +19,7 @@
   </a>
 </p>
 
-![preview](https://raw.githubusercontent.com/dotmind/modals/master/preview.png)
+![preview](https://raw.githubusercontent.com/dotmind/react-modals/master/preview.png)
 
 ## Menu
 
