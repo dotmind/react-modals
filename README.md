@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="https://github.com/dotmind/modals/raw/master/examples/dotmind-logo.png" width="100" />
+  <img alt="Logo" src="https://github.com/dotmind/modals/raw/master/dotmind-logo.png" width="100" />
 </div>
 <h1 align="center">
   @dotmind/modals
