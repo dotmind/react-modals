@@ -51,7 +51,7 @@ npm i @dotmind/react-modals
 ### Modal usage
 
 ```javascript
-import Modal from "mind-modales";
+import Modal from "react-modales";
 
 const BaseModal = () => {
   return (
