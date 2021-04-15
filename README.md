@@ -69,9 +69,10 @@ const CustomModal = () => {
         contentStyle={{ marginTop: '20px' }}
         closeButtonStyle={{ width: '35px', height: '35px' }}
         closeButtonElement={<Element/>}
-        overlay
-        closeButton
-        clickOutside
+        overlayClassName='customOverlayClass'
+        containerClassName='customContainerClass'
+        contentClassName='customContentClass'
+        closeButtonClassName='customCloseButtonClass'
         open={modalState}
     >
       {content}
@@ -86,11 +87,15 @@ const CustomModal = () => {
 | containerStyle | Override modal container style | false | / | React.CSSProperties |
 | contentStyle | Override modal content style | false | / | React.CSSProperties |
 | closeButtonStyle | Override modal close button style | false | / | React.CSSProperties |
+| overlayClassName| Add custom class to modal overlay | false | / | string |
+| containerClassName | Add custom class to modal container | false | / | string |
+| contentClassName | Add custom class to modal content | false | / | string |
+| closeButtonClassName | Add custom class to modal close button | false | / | string |
 | closeButtonElement | Modify close button element | false | 'X' | ReactElement or string |
-| overlay | Show/Hide overlay | false | false | boolean |
-| closeButton | Show/Hide closeButton | false | false | boolean |
-| clickOutside |  Close on click outside On/Off | false | false | boolean |
-| open | The state of the modal | true | false | false | boolean |
+| overlay | Show/Hide overlay | false | true | boolean |
+| closeButton | Show/Hide closeButton | false | true | boolean |
+| clickOutside |  Close on click outside On/Off | false | true | boolean |
+| open | The state of the modal | true | false | boolean |
 
 ## ⚡️ Contributing
 

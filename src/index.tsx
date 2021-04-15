@@ -4,14 +4,18 @@ import './styles.scss'
 
 export type Props = {
   children: ReactElement | string | null;
-  overlay: boolean,
-  overlayStyle: React.CSSProperties,
-  containerStyle: React.CSSProperties,
-  contentStyle: React.CSSProperties,
-  closeButtonStyle: React.CSSProperties,
-  closeButtonElement: ReactElement | string,
-  closeButton: boolean,
-  clickOutside: boolean,
+  overlay?: boolean,
+  overlayStyle?: React.CSSProperties,
+  containerStyle?: React.CSSProperties,
+  contentStyle?: React.CSSProperties,
+  closeButtonStyle?: React.CSSProperties,
+  overlayClassName?: string,
+  containerClassName?: string,
+  contentClassName?: string,
+  closeButtonClassName?: string,
+  closeButtonElement?: ReactElement | string,
+  closeButton?: boolean,
+  clickOutside?: boolean,
   open: boolean,
 };
 
@@ -22,6 +26,10 @@ const Modale = ({
   containerStyle,
   contentStyle,
   closeButtonStyle,
+  overlayClassName,
+  containerClassName,
+  contentClassName,
+  closeButtonClassName,
   closeButtonElement,
   closeButton,
   clickOutside,
@@ -37,15 +45,15 @@ const Modale = ({
 
   const renderCloseButton = useMemo(() => {
     return (
-      <button className='modale__closeButton' style={closeButtonStyle} onClick={() => show(false)}>
-        {closeButtonElement || "X"}
+      <button className={`modale__closeButton ${closeButtonClassName}`} style={closeButtonStyle} onClick={() => show(false)}>
+        {closeButtonElement}
       </button>
     );
   }, [opened]);
 
   const renderOverlay = useMemo(() => {
     return (
-      <div className='modale__overlay' style={overlayStyle} onClick={handleClickOutside} role='button'></div>
+      <div className={`modale__overlay ${overlayClassName}`} style={overlayStyle} onClick={handleClickOutside} role='button'></div>
     );
   }, [opened]);
 
@@ -53,9 +61,9 @@ const Modale = ({
     return (
       <div className='modale__overlayContainer'>
         {overlay && renderOverlay}
-        <div className='modale__container' style={containerStyle}>
+        <div className={`modale__container ${containerClassName}`} style={containerStyle}>
           {closeButton && renderCloseButton}
-          <div className='modale__content' style={contentStyle}>
+          <div className={`modale__content ${contentClassName}`} style={contentStyle}>
             {children}
           </div>
         </div>
@@ -70,5 +78,20 @@ const Modale = ({
   );
 
 }
+
+Modale.defaultProps = {
+  overlay: true,
+  overlayStyle: null,
+  containerStyle: null,
+  contentStyle: null,
+  closeButtonStyle: null,
+  overlayClassName: '',
+  containerClassName: '',
+  contentClassName: '',
+  closeButtonClassName: '',
+  closeButtonElement: 'x',
+  closeButton: true,
+  clickOutside: true,
+};
 
 export default Modale
