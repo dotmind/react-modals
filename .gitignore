@@ -6,3 +6,4 @@ public/*.js
 public/*.map
 public/*.css
 dist
+src/__tests__/__snapshots__/*
