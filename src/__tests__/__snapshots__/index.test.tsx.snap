@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React Modal Check if modal is in the document 1`] = `
+<body>
+  <div />
+  <div
+    class="react-modal-container"
+  >
+    <div
+      class="react-modal-content"
+    >
+      <button
+        class="react-modal-close default"
+      />
+      modal content
+    </div>
+  </div>
+</body>
+`;
+
+exports[`React Modal Check if modal is not in the document 1`] = `
+<body>
+  <div />
+</body>
+`;

@@ -1,97 +1,103 @@
-import * as React from 'react'
-import { ReactElement, useState, useMemo, useCallback } from 'react';
-import './styles.scss'
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  ReactNode,
+  useMemo,
+  ReactElement,
+} from 'react';
+import { createPortal } from 'react-dom';
+
+import './styles.scss';
 
 export type Props = {
-  children: ReactElement | string | null;
-  overlay?: boolean,
-  overlayStyle?: React.CSSProperties,
-  containerStyle?: React.CSSProperties,
-  contentStyle?: React.CSSProperties,
-  closeButtonStyle?: React.CSSProperties,
-  overlayClassName?: string,
-  containerClassName?: string,
-  contentClassName?: string,
-  closeButtonClassName?: string,
-  closeButtonElement?: ReactElement | string,
-  closeButton?: boolean,
-  clickOutside?: boolean,
-  open: boolean,
+  modalOpen: boolean;
+  withShadow?: boolean;
+  containerClassName?: string;
+  contentClassName?: string;
+  closeButtonClassName?: string;
+  closeButtonElement?: ReactElement | string;
+  children: ReactNode;
+  onClose: () => void;
 };
 
-const Modale = ({
-  children,
-  overlay,
-  overlayStyle,
-  containerStyle,
-  contentStyle,
-  closeButtonStyle,
-  overlayClassName,
+const Modal: React.FC<Props> = ({
+  modalOpen,
+  withShadow,
   containerClassName,
   contentClassName,
   closeButtonClassName,
   closeButtonElement,
-  closeButton,
-  clickOutside,
-  open
-}: Props): ReactElement<'div'> | null => {
-  const [opened, show] = useState(open);
+  onClose,
+  children,
+}: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
 
-  const handleClickOutside = useCallback(() => {
-    if (clickOutside) {
-      show(false);
+  const handleClasses = useCallback((classes: string[]) => (
+    classes.filter((x) => !!x).join(' ')
+  ), []);
+
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape' && modalOpen) {
+      onClose();
     }
-  }, []);
+  }, [onClose, modalOpen]);
 
-  const renderCloseButton = useMemo(() => {
-    return (
-      <button className={`modale__closeButton ${closeButtonClassName}`} style={closeButtonStyle} onClick={() => show(false)}>
-        {closeButtonElement}
-      </button>
-    );
-  }, [opened]);
+  const handleClickOutside = useCallback((e) => {
+    const { target } = e;
 
-  const renderOverlay = useMemo(() => {
-    return (
-      <div className={`modale__overlay ${overlayClassName}`} style={overlayStyle} onClick={handleClickOutside} role='button'></div>
-    );
-  }, [opened]);
+    if (ref.current && !ref.current?.contains(target) && modalOpen) {
+      onClose();
+    }
+  }, [ref, onClose, modalOpen]);
 
-  const renderModale = useMemo(() => {
-    return (
-      <div className='modale__overlayContainer'>
-        {overlay && renderOverlay}
-        <div className={`modale__container ${containerClassName}`} style={containerStyle}>
-          {closeButton && renderCloseButton}
-          <div className={`modale__content ${contentClassName}`} style={contentStyle}>
-            {children}
-          </div>
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown, false);
+    document.addEventListener('mousedown', handleClickOutside, false);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown, false);
+      document.removeEventListener('mousedown', handleClickOutside, false);
+    };
+  }, [onKeyDown, handleClickOutside]);
+
+  const renderModal = useMemo(() => {
+    if (!modalOpen) {
+      return null;
+    }
+
+    return createPortal(
+      <div
+        className={handleClasses([
+          'react-modal-container',
+          containerClassName || '',
+        ])}
+      >
+        <div
+          ref={ref}
+          className={handleClasses([
+            'react-modal-content',
+            withShadow ? 'with-shadow' : '',
+            contentClassName || '',
+          ])}
+        >
+          <button
+            onClick={onClose}
+            className={handleClasses([
+              'react-modal-close',
+              closeButtonElement ? '' : 'default',
+              closeButtonClassName || '',
+            ])}
+          >
+            {closeButtonElement}
+          </button>
+          {children}
         </div>
-      </div>
+      </div>,
+      document.body,
     );
-  }, [opened]);
+  }, [modalOpen, children, withShadow, onclose, handleClasses]);
 
-  return (
-    <>
-      {opened && renderModale}
-    </>
-  );
-
-}
-
-Modale.defaultProps = {
-  overlay: true,
-  overlayStyle: null,
-  containerStyle: null,
-  contentStyle: null,
-  closeButtonStyle: null,
-  overlayClassName: '',
-  containerClassName: '',
-  contentClassName: '',
-  closeButtonClassName: '',
-  closeButtonElement: 'x',
-  closeButton: true,
-  clickOutside: true,
+  return renderModal;
 };
 
-export default Modale
+export default Modal;

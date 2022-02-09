@@ -2,4 +2,7 @@
 node_modules
 .DS_Store
 *.tgz
+public/*.js
+public/*.map
+public/*.css
 dist
