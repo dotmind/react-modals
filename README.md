@@ -50,7 +50,7 @@ npm i @dotmind/react-modals
 ## 👷‍♂️ How it's work
 
 <p align="center">
-  <a href="https://codesandbox.io/s/react-modals-jumgq">
+  <a target="_blank" href="https://codesandbox.io/s/react-modals-jumgq">
     React Modals sandbox
   </a>
 </p>
