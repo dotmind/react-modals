@@ -1,8 +1,7 @@
 node_modules/*
-public/*
+example/*
 dist/*
 serve.js
 build.js
-src/dev.tsx
 src/globals.d.ts
 src/__tests__/*

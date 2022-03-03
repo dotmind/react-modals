@@ -24,6 +24,6 @@
     "target": "es6",
     "emitDeclarationOnly": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.scss"],
-  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx", "src/dev.tsx", "src/__tests__/*", "src/globals.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.scss", "example/*"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx", "example/*", "src/__tests__/*", "src/globals.d.ts"]
 }

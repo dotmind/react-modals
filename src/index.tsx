@@ -17,6 +17,7 @@ export type Props = {
   contentClassName?: string;
   closeButtonClassName?: string;
   closeButtonElement?: ReactElement | string;
+  containerZIndex: number;
   children: ReactNode;
   onClose: () => void;
 };
@@ -28,14 +29,11 @@ const Modal: React.FC<Props> = ({
   contentClassName,
   closeButtonClassName,
   closeButtonElement,
+  containerZIndex,
   onClose,
   children,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
-
-  const handleClasses = useCallback((classes: string[]) => (
-    classes.filter((x) => !!x).join(' ')
-  ), []);
 
   const onKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape' && modalOpen) {
@@ -65,39 +63,28 @@ const Modal: React.FC<Props> = ({
       return null;
     }
 
-    return createPortal(
+    return (
       <div
-        className={handleClasses([
-          'react-modal-container',
-          containerClassName || '',
-        ])}
+        className={`react-modal-container ${containerClassName ? containerClassName : ''}`}
+        style={{ zIndex: containerZIndex }}
       >
         <div
           ref={ref}
-          className={handleClasses([
-            'react-modal-content',
-            withShadow ? 'with-shadow' : '',
-            contentClassName || '',
-          ])}
+          className={`react-modal-content ${withShadow ? 'with-shadow' : ''} ${contentClassName ? contentClassName : ''}`}
         >
           <button
             onClick={onClose}
-            className={handleClasses([
-              'react-modal-close',
-              closeButtonElement ? '' : 'default',
-              closeButtonClassName || '',
-            ])}
+            className={`react-modal-close ${closeButtonElement ? '' : 'default'} ${closeButtonClassName ? closeButtonClassName : ''}`}
           >
             {closeButtonElement}
           </button>
           {children}
         </div>
-      </div>,
-      document.body,
+      </div>
     );
-  }, [modalOpen, children, withShadow, onclose, handleClasses]);
+  }, [modalOpen, children, withShadow, onclose, containerZIndex]);
 
-  return renderModal;
+  return createPortal(renderModal, document.body);
 };
 
 export default Modal;

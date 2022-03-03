@@ -33,7 +33,7 @@
 
 This package helps to create custom modals in a blaze speed 🚀.
 
-You need react >= 16.0.
+You need react >= 17.0.
 
 ## 💻 Installation
 
@@ -65,19 +65,19 @@ import Modal from 'react-modals';
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleOpenModal = useCallback(() => {
-    setModalOpen(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setModalOpen(false);
-  }, []);
+  const handleChangeModal = useCallback(() => {
+    setModalOpen((prevState) => !prevState);
+  }, [setModalOpen]);
 
   return (
     <div>
       <h1>Test react modal</h1>
-      <button onClick={handleOpenModal}>Click me !</button>
-      <Modal modalOpen={modalOpen} onClose={handleCloseModal}>
+      <button onClick={handleChangeModal}>Click me !</button>
+      <Modal
+        modalOpen={modalOpen}
+        onClose={handleChangeModal}
+        containerZIndex={9999}
+      >
         <h1>This is modal content</h1>
         <p>You can put your html here, have fun !</p>
       </Modal>
@@ -91,6 +91,7 @@ const App: React.FC = () => {
 | modalOpen            | Modal state                      | true     | boolean                |
 | onClose              | Close modal function             | true     | () => void             |
 | children             | Modal content                    | true     | ReactNode              |
+| containerZIndex      | Add custom z-index to container  | true     | number                 |
 | closeButtonElement   | Modify close button element      | false    | ReactElement or string |
 | closeButtonClassName | Add custom class on close button | false    | string                 |
 | containerClassName   | Add custom class on container    | false    | string                 |

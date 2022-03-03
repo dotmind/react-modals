@@ -5,7 +5,6 @@
   right: 0;
   bottom: 0;
   background: rgba(123, 124, 138, 0.5);
-  z-index: 9999;
 
   .react-modal-content {
     position: fixed;
@@ -13,7 +12,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
-    z-index: 99999;
     text-align: center;
     display: flex;
     flex-direction: column;

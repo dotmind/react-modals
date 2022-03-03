@@ -5,7 +5,7 @@ const { sassPlugin } = require('esbuild-sass-plugin');
 liveServer.start({
   open: true,
   port: +process.env.PORT || 8080,
-  root: 'public',
+  root: 'example',
   ignore: 'node_modules',
   wait: 0,
 });
@@ -18,10 +18,10 @@ build({
     ),
   },
   watch: true,
-  entryPoints: ['src/dev.tsx'],
+  entryPoints: ['example/dev.tsx'],
   incremental: true,
   minify: process.env.NODE_ENV === 'production',
-  outdir: 'public',
+  outdir: 'example',
   sourcemap: true,
   plugins: [
     sassPlugin(),

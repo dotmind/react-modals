@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && node build.js",
-    "start": "rm -f public/*.js && rm -f public/*.css && rm -f public/*.map && node serve.js",
+    "start": "rm -f example/*.js && rm -f example/*.css && rm -f example/*.map && node serve.js",
     "lint": "eslint . --ext .js,.ts,.tsx --fix",
     "test": "jest",
     "test:watch": "jest --watch",
