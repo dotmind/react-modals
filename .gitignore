@@ -2,8 +2,8 @@
 node_modules
 .DS_Store
 *.tgz
-public/*.js
-public/*.map
-public/*.css
+example/*.js
+example/*.map
+example/*.css
 dist
 src/__tests__/__snapshots__/*
