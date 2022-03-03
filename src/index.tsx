@@ -17,7 +17,7 @@ export type Props = {
   contentClassName?: string;
   closeButtonClassName?: string;
   closeButtonElement?: ReactElement | string;
-  containerZIndex: number;
+  containerZIndex?: number;
   children: ReactNode;
   onClose: () => void;
 };
@@ -29,7 +29,7 @@ const Modal: React.FC<Props> = ({
   contentClassName,
   closeButtonClassName,
   closeButtonElement,
-  containerZIndex,
+  containerZIndex = 9999999,
   onClose,
   children,
 }: Props) => {
@@ -59,11 +59,11 @@ const Modal: React.FC<Props> = ({
   }, [onKeyDown, handleClickOutside]);
 
   const renderModal = useMemo(() => {
-    if (!modalOpen) {
+    if (!modalOpen || typeof window === 'undefined') {
       return null;
     }
 
-    return (
+    return createPortal(
       <div
         className={`react-modal-container ${containerClassName ? containerClassName : ''}`}
         style={{ zIndex: containerZIndex }}
@@ -80,11 +80,12 @@ const Modal: React.FC<Props> = ({
           </button>
           {children}
         </div>
-      </div>
+      </div>,
+      document.body
     );
   }, [modalOpen, children, withShadow, onclose, containerZIndex]);
 
-  return createPortal(renderModal, document.body);
+  return renderModal;
 };
 
 export default Modal;

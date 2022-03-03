@@ -91,7 +91,7 @@ const App: React.FC = () => {
 | modalOpen            | Modal state                      | true     | boolean                |
 | onClose              | Close modal function             | true     | () => void             |
 | children             | Modal content                    | true     | ReactNode              |
-| containerZIndex      | Add custom z-index to container  | true     | number                 |
+| containerZIndex      | Add custom z-index to container  | false    | number                 |
 | closeButtonElement   | Modify close button element      | false    | ReactElement or string |
 | closeButtonClassName | Add custom class on close button | false    | string                 |
 | containerClassName   | Add custom class on container    | false    | string                 |
