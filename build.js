@@ -15,6 +15,8 @@ build({
   outdir: 'dist',
   target: ['esnext', 'node12.22.0'],
   plugins: [
-    sassPlugin(),
+    sassPlugin({
+      type: 'style',
+    }),
   ],
 });
