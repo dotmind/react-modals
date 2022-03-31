@@ -1,6 +1,6 @@
 {
   "name": "@dotmind/react-modals",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "React Modals is a tool to quickly generate modals",
   "main": "dist/index.js",
   "scripts": {
