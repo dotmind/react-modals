@@ -60,7 +60,7 @@ npm i @dotmind/react-modals
 ```javascript
 import React, { useCallback, useState } from 'react';
 
-import Modal from 'react-modals';
+import Modal from '@dotmind/react-modals';
 
 const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
