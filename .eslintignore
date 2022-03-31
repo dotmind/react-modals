@@ -1,0 +1,7 @@
+node_modules/*
+example/*
+dist/*
+serve.js
+build.js
+src/globals.d.ts
+src/__tests__/*
