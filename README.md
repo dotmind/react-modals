@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="https://github.com/dotmind/react-modals/raw/master/dotmind-logo.png" width="100" />
+  <img alt="Logo" src="./react-modals-dotmind.jpg" />
 </div>
 <h1 align="center">
   @dotmind/react-modals
@@ -31,7 +31,15 @@
 
 ## ✋ Disclaimer
 
-This package helps to create custom modals in a blaze speed 🚀.
+Create quickly and easily modals for React. Builded by dotmind.io
+If you’re familiar with the basics of React, you will know that because of its structure you can face some serious CSS issues when you need to show a modal.
+With this package you can :
+
+- clip your modal on any page
+- say goodbye to CSS issues
+- saving time and simply customize
+
+Let's code 🚀.
 
 You need react >= 17.0.
 
