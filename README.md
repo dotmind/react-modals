@@ -34,9 +34,11 @@
 Create quickly and easily modals for React. Builded by dotmind.io
 If you’re familiar with the basics of React, you will know that because of its structure you can face some serious CSS issues when you need to show a modal.
 With this package you can :
-clip your modal on any page
-say goodbye to CSS issues
-saving time and simply customize
+
+- clip your modal on any page
+- say goodbye to CSS issues
+- saving time and simply customize
+
 Let's code 🚀.
 
 You need react >= 17.0.
