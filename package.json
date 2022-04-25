@@ -1,7 +1,7 @@
 {
   "name": "@dotmind/react-modals",
-  "version": "2.0.1",
-  "description": "React Modals is a tool to quickly generate modals",
+  "version": "2.0.3",
+  "description": "Create quickly and easily modals for React. Builded by dotmind.io",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist && node build.js",
@@ -43,10 +43,10 @@
     "typescript": "4.5.4"
   },
   "dependencies": {
-    "@types/react": "17.0.3",
-    "@types/react-dom": "17.0.3",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "@types/react": "^18.0.6",
+    "@types/react-dom": "^18.0.2",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
   },
   "files": [
     "dist"
