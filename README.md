@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="./react-modals-dotmind.jpg" />
+  <img alt="Logo" src="https://dotmind.io/wp-content/uploads/2022/04/react-modals-dotmind-2-scaled.jpg" />
 </div>
 <h1 align="center">
   @dotmind/react-modals

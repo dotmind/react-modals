@@ -41,10 +41,10 @@ const Modal: React.FC<Props> = ({
     }
   }, [onClose, modalOpen]);
 
-  const handleClickOutside = useCallback((e) => {
+  const handleClickOutside = useCallback((e: MouseEvent) => {
     const { target } = e;
 
-    if (ref.current && !ref.current?.contains(target) && modalOpen) {
+    if (ref.current && !ref.current?.contains(target as Node) && modalOpen) {
       onClose();
     }
   }, [ref, onClose, modalOpen]);
