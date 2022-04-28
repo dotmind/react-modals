@@ -41,7 +41,9 @@ With this package you can :
 
 Let's code 🚀.
 
-You need react >= 17.0.
+If you use React < 18, please use version 2.0.2 ([React 18 changelog](https://reactjs.org/blog/2022/03/29/react-v18.html#new-client-and-server-rendering-apis))
+
+Version 2.0.3+ require React 18+
 
 ## 💻 Installation
 
