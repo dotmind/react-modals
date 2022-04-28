@@ -41,7 +41,7 @@ With this package you can :
 
 Let's code 🚀.
 
-You need react >= 17.0.
+You need react >= 18.0.
 
 ## 💻 Installation
 
