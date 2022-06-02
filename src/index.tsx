@@ -4,7 +4,7 @@ import React, {
   useRef,
   ReactNode,
   useMemo,
-  ReactElement,
+  ReactElement
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -18,6 +18,8 @@ export type Props = {
   closeButtonClassName?: string;
   closeButtonElement?: ReactElement | string;
   containerZIndex?: number;
+  closeOnClickOutside?: boolean;
+  showCloseButton?: boolean;
   children: ReactNode;
   onClose: () => void;
 };
@@ -30,24 +32,54 @@ const Modal: React.FC<Props> = ({
   closeButtonClassName,
   closeButtonElement,
   containerZIndex = 9999999,
+  closeOnClickOutside = true,
+  showCloseButton = true,
   onClose,
-  children,
+  children
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape' && modalOpen) {
-      onClose();
-    }
-  }, [onClose, modalOpen]);
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && modalOpen && closeOnClickOutside) {
+        onClose();
+      }
+    },
+    [onClose, modalOpen, closeOnClickOutside]
+  );
 
-  const handleClickOutside = useCallback((e: MouseEvent) => {
-    const { target } = e;
+  const handleClickOutside = useCallback(
+    (e: MouseEvent) => {
+      const { target } = e;
 
-    if (ref.current && !ref.current?.contains(target as Node) && modalOpen) {
-      onClose();
+      if (
+        ref.current &&
+        !ref.current?.contains(target as Node) &&
+        modalOpen &&
+        closeOnClickOutside
+      ) {
+        onClose();
+      }
+    },
+    [ref, onClose, modalOpen, closeOnClickOutside]
+  );
+
+  const renderCloseButton = useMemo(() => {
+    if (!showCloseButton) {
+      return null;
     }
-  }, [ref, onClose, modalOpen]);
+
+    return (
+      <button
+        onClick={onClose}
+        className={`react-modal-close ${closeButtonElement ? '' : 'default'} ${
+          closeButtonClassName ? closeButtonClassName : ''
+        }`}
+      >
+        {closeButtonElement}
+      </button>
+    );
+  }, [showCloseButton, closeButtonElement, closeButtonClassName, onClose]);
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown, false);
@@ -65,25 +97,32 @@ const Modal: React.FC<Props> = ({
 
     return createPortal(
       <div
-        className={`react-modal-container ${containerClassName ? containerClassName : ''}`}
+        className={`react-modal-container ${
+          containerClassName ? containerClassName : ''
+        }`}
         style={{ zIndex: containerZIndex }}
       >
         <div
           ref={ref}
-          className={`react-modal-content ${withShadow ? 'with-shadow' : ''} ${contentClassName ? contentClassName : ''}`}
+          className={`react-modal-content ${withShadow ? 'with-shadow' : ''} ${
+            contentClassName ? contentClassName : ''
+          }`}
         >
-          <button
-            onClick={onClose}
-            className={`react-modal-close ${closeButtonElement ? '' : 'default'} ${closeButtonClassName ? closeButtonClassName : ''}`}
-          >
-            {closeButtonElement}
-          </button>
+          {renderCloseButton}
           {children}
         </div>
       </div>,
       document.body
     );
-  }, [modalOpen, children, withShadow, onclose, containerZIndex]);
+  }, [
+    contentClassName,
+    renderCloseButton,
+    modalOpen,
+    children,
+    withShadow,
+    containerZIndex,
+    containerClassName
+  ]);
 
   return renderModal;
 };
