@@ -106,6 +106,8 @@ const App: React.FC = () => {
 | closeButtonClassName | Add custom class on close button | false    | string                 |
 | containerClassName   | Add custom class on container    | false    | string                 |
 | contentClassName     | Add custom class on content      | false    | string                 |
+| closeOnClickOutside  | Close modal on click outside     | false    | boolean                |
+| showCloseButton      | Hide or show button button       | false    | boolean                |
 | withShadow           | Add default box shadow           | false    | boolean                |
 
 ## ⚡️ Contributing
