@@ -41,11 +41,11 @@ const Modal: React.FC<Props> = ({
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && modalOpen) {
+      if (e.key === 'Escape' && modalOpen && closeOnClickOutside) {
         onClose();
       }
     },
-    [onClose, modalOpen]
+    [onClose, modalOpen, closeOnClickOutside]
   );
 
   const handleClickOutside = useCallback(
