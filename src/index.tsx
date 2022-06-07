@@ -4,7 +4,7 @@ import React, {
   useRef,
   ReactNode,
   useMemo,
-  ReactElement
+  ReactElement,
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -35,7 +35,7 @@ const Modal: React.FC<Props> = ({
   closeOnClickOutside = true,
   showCloseButton = true,
   onClose,
-  children
+  children,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -45,7 +45,7 @@ const Modal: React.FC<Props> = ({
         onClose();
       }
     },
-    [onClose, modalOpen, closeOnClickOutside]
+    [onClose, modalOpen, closeOnClickOutside],
   );
 
   const handleClickOutside = useCallback(
@@ -53,16 +53,16 @@ const Modal: React.FC<Props> = ({
       const { target } = e;
 
       if (
-        ref &&
-        ref.current &&
-        !ref.current?.contains(target as Node) &&
-        modalOpen &&
-        closeOnClickOutside
+        modalOpen
+        && ref
+        && ref.current
+        && !ref.current?.contains(target as Node)
+        && closeOnClickOutside
       ) {
         onClose();
       }
     },
-    [ref, onClose, modalOpen, closeOnClickOutside]
+    [ref, onClose, modalOpen, closeOnClickOutside],
   );
 
   const renderCloseButton = useMemo(() => {
@@ -74,7 +74,7 @@ const Modal: React.FC<Props> = ({
       <button
         onClick={onClose}
         className={`react-modal-close ${closeButtonElement ? '' : 'default'} ${
-          closeButtonClassName ? closeButtonClassName : ''
+          closeButtonClassName || ''
         }`}
       >
         {closeButtonElement}
@@ -92,29 +92,29 @@ const Modal: React.FC<Props> = ({
   }, [onKeyDown, handleClickOutside]);
 
   const renderModal = useMemo(() => {
-    if (!modalOpen || typeof window === 'undefined') {
-      return null;
+    if (typeof window !== 'undefined') {
+      return createPortal(
+        <div
+          className={`react-modal-container ${
+            containerClassName || ''
+          }`}
+          style={{ zIndex: containerZIndex }}
+        >
+          <div
+            ref={ref}
+            className={`react-modal-content ${withShadow ? 'with-shadow' : ''} ${
+              contentClassName || ''
+            }`}
+          >
+            {renderCloseButton}
+            {children}
+          </div>
+        </div>,
+        document.body,
+      );
     }
 
-    return createPortal(
-      <div
-        className={`react-modal-container ${
-          containerClassName ? containerClassName : ''
-        }`}
-        style={{ zIndex: containerZIndex }}
-      >
-        <div
-          ref={ref}
-          className={`react-modal-content ${withShadow ? 'with-shadow' : ''} ${
-            contentClassName ? contentClassName : ''
-          }`}
-        >
-          {renderCloseButton}
-          {children}
-        </div>
-      </div>,
-      document.body
-    );
+    return null;
   }, [
     contentClassName,
     renderCloseButton,
@@ -122,7 +122,8 @@ const Modal: React.FC<Props> = ({
     children,
     withShadow,
     containerZIndex,
-    containerClassName
+    containerClassName,
+    ref,
   ]);
 
   return renderModal;
