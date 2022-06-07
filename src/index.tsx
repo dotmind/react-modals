@@ -71,7 +71,7 @@ const Modal: React.FC<Props> = ({
     if (!showCloseButton) {
       return null;
     }
-    
+
     return (
       <button
         onClick={onClose}
@@ -86,24 +86,33 @@ const Modal: React.FC<Props> = ({
 
   useEffect(() => {
     setIsBrowser(true);
+
+    return () => {
+      setIsBrowser(false);
+    };
   }, []);
 
   useEffect(() => {
     if (isBrowser) {
-      document.addEventListener('keydown', onKeyDown, false);
-      document.addEventListener('mousedown', handleClickOutside, false);
+      const node = document.createElement('div');
+      node.id = 'react-modals';
 
-      return () => {
-        document.removeEventListener('keydown', onKeyDown, false);
-        document.removeEventListener('mousedown', handleClickOutside, false);
-      };
+      document.body.appendChild(node);
     }
+  }, [isBrowser]);
 
-    return;
-  }, [onKeyDown, handleClickOutside, isBrowser]);
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown, false);
+    document.addEventListener('mousedown', handleClickOutside, false);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown, false);
+      document.removeEventListener('mousedown', handleClickOutside, false);
+    };
+  }, [onKeyDown, handleClickOutside]);
 
   const renderModal = useMemo(() => {
-    if (isBrowser && modalOpen) {
+    if (isBrowser && modalOpen && document) {
       return createPortal(
         <div
           className={`react-modal-container ${
@@ -121,7 +130,7 @@ const Modal: React.FC<Props> = ({
             {children}
           </div>
         </div>,
-        document.body,
+        document.getElementById('react-modals') || document.body,
       );
     }
 
