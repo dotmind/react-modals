@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   useMemo,
   ReactElement,
+  useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -38,6 +39,7 @@ const Modal: React.FC<Props> = ({
   children,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [isBrowser, setIsBrowser] = useState<boolean>(false);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -53,10 +55,10 @@ const Modal: React.FC<Props> = ({
       const { target } = e;
 
       if (
-        modalOpen
-        && ref
+        ref
         && ref.current
         && !ref.current?.contains(target as Node)
+        && modalOpen
         && closeOnClickOutside
       ) {
         onClose();
@@ -69,7 +71,7 @@ const Modal: React.FC<Props> = ({
     if (!showCloseButton) {
       return null;
     }
-
+    
     return (
       <button
         onClick={onClose}
@@ -83,16 +85,25 @@ const Modal: React.FC<Props> = ({
   }, [showCloseButton, closeButtonElement, closeButtonClassName, onClose]);
 
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown, false);
-    document.addEventListener('mousedown', handleClickOutside, false);
-    return () => {
-      document.removeEventListener('keydown', onKeyDown, false);
-      document.removeEventListener('mousedown', handleClickOutside, false);
-    };
-  }, [onKeyDown, handleClickOutside]);
+    setIsBrowser(true);
+  }, []);
+
+  useEffect(() => {
+    if (isBrowser) {
+      document.addEventListener('keydown', onKeyDown, false);
+      document.addEventListener('mousedown', handleClickOutside, false);
+
+      return () => {
+        document.removeEventListener('keydown', onKeyDown, false);
+        document.removeEventListener('mousedown', handleClickOutside, false);
+      };
+    }
+
+    return;
+  }, [onKeyDown, handleClickOutside, isBrowser]);
 
   const renderModal = useMemo(() => {
-    if (typeof window !== 'undefined') {
+    if (isBrowser && modalOpen) {
       return createPortal(
         <div
           className={`react-modal-container ${
@@ -123,7 +134,7 @@ const Modal: React.FC<Props> = ({
     withShadow,
     containerZIndex,
     containerClassName,
-    ref,
+    isBrowser,
   ]);
 
   return renderModal;
