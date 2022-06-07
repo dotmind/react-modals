@@ -5,7 +5,6 @@ import React, {
   ReactNode,
   useMemo,
   ReactElement,
-  useState,
 } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -38,8 +37,19 @@ const Modal: React.FC<Props> = ({
   onClose,
   children,
 }: Props) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isBrowser, setIsBrowser] = useState<boolean>(false);
+  const el = document.createElement('div');
+  const wrapper: React.RefObject<HTMLDivElement> = useRef(el);
+
+  useEffect(() => {
+    const current = wrapper.current as HTMLDivElement;
+    current.setAttribute('id', 'react-modals');
+
+    document.body.appendChild(current);
+
+    return () => {
+      document.body.removeChild(current);
+    };
+  }, []);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -55,16 +65,16 @@ const Modal: React.FC<Props> = ({
       const { target } = e;
 
       if (
-        ref
-        && ref.current
-        && !ref.current?.contains(target as Node)
+        wrapper
+        && wrapper.current
+        && !wrapper.current?.contains(target as Node)
         && modalOpen
         && closeOnClickOutside
       ) {
         onClose();
       }
     },
-    [ref, onClose, modalOpen, closeOnClickOutside],
+    [wrapper, onClose, modalOpen, closeOnClickOutside],
   );
 
   const renderCloseButton = useMemo(() => {
@@ -85,23 +95,6 @@ const Modal: React.FC<Props> = ({
   }, [showCloseButton, closeButtonElement, closeButtonClassName, onClose]);
 
   useEffect(() => {
-    setIsBrowser(true);
-
-    return () => {
-      setIsBrowser(false);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isBrowser) {
-      const node = document.createElement('div');
-      node.id = 'react-modals';
-
-      document.body.appendChild(node);
-    }
-  }, [isBrowser]);
-
-  useEffect(() => {
     document.addEventListener('keydown', onKeyDown, false);
     document.addEventListener('mousedown', handleClickOutside, false);
 
@@ -112,7 +105,7 @@ const Modal: React.FC<Props> = ({
   }, [onKeyDown, handleClickOutside]);
 
   const renderModal = useMemo(() => {
-    if (isBrowser && modalOpen && document) {
+    if (modalOpen) {
       return createPortal(
         <div
           className={`react-modal-container ${
@@ -121,7 +114,7 @@ const Modal: React.FC<Props> = ({
           style={{ zIndex: containerZIndex }}
         >
           <div
-            ref={ref}
+            ref={wrapper}
             className={`react-modal-content ${withShadow ? 'with-shadow' : ''} ${
               contentClassName || ''
             }`}
@@ -143,7 +136,7 @@ const Modal: React.FC<Props> = ({
     withShadow,
     containerZIndex,
     containerClassName,
-    isBrowser,
+    wrapper,
   ]);
 
   return renderModal;
