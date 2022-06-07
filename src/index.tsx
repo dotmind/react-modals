@@ -53,6 +53,7 @@ const Modal: React.FC<Props> = ({
       const { target } = e;
 
       if (
+        ref &&
         ref.current &&
         !ref.current?.contains(target as Node) &&
         modalOpen &&
