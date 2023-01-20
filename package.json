@@ -1,6 +1,6 @@
 {
   "name": "@dotmind/react-modals",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Create quickly and easily modals for React. Builded by dotmind.io",
   "main": "dist/index.js",
   "scripts": {
@@ -45,8 +45,8 @@
     "typescript": "4.5.4"
   },
   "peerDependencies": {
-    "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "files": [
     "dist"
