@@ -1,6 +1,6 @@
 {
   "name": "@dotmind/react-modals",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Create quickly and easily modals for React. Builded by dotmind.io",
   "main": "dist/index.js",
   "scripts": {
